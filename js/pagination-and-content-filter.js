@@ -37,7 +37,7 @@ function calculate$students() {
     $(".student-item:visible").each(function(){
         $students++;
     });
-    console.log("Calculated amount of student-items shown. There are " + $students + " of them.")
+    console.log("Calculated amount of student-items shown. There are " + $students + " of them.");
 }
 
 
@@ -101,17 +101,19 @@ function paginate(x) {
     var pagMin = pagMax - 9;
     console.log(pagMin);
 
-    if ( $(".pagination .active").text() === "" + x + "" ) {
 
-        for (var i = pagMin; pagMin < pagMax ; i++ ) {
-            $(".student-item").eq(i).fadeIn("fast", function() {
-                // Nothing needed here
+    if ( x.text() === "2")
+        for (var i = pagMin;pagMin < pagMax; i++ ) {
+            $(".student-item").eq(i).fadeIn(600, function(){
+                // Animation supposedly complete...
             });
+            console.log("CONSTRUCTING STUDENTS");
+
         }
 
     }
 
-}
+
 
 
 
