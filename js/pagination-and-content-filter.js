@@ -22,6 +22,12 @@ var pagination = $("<div class='pagination'></div>"); // The pagination containe
 
 var $studentItem = $(".student-item");
 
+//Creating an array of the student items that can be accessed any time.
+var studentArray = $.makeArray($studentItem);
+
+// The pagination anchor clicked
+var pagSelected;
+
 
 //************* FUNCTIONS *************//
 
@@ -44,20 +50,25 @@ function calculatePagesNeeded() {
 
 //Hides all jquery students on the page.
 function hideStudents() {
-    $studentItem.each(function() {
-        $(this).hide();
+    $(".student-list").each(function() {
+        $(this).children().hide();
     });
     console.log("Hiding ALL jquery students.");
 }
 // Calculates the jquery .student-items that are exclusively visible on the page.
 
+function showStudents() {
+    $studentItem.each(function(){
+        $(this).show();
+    });
+}
 
 // Appending the right number of Pagination Pages to the bottom of the page.
 function addPages() {
     container.append(pagination); // Initially placing the pagination withing the container.
 
     // For each page that is needed, append a pagination anchor to the pagination contiainer.
-    for ( i = 1; i < pagesNeeded + 1; i++ ) {   // I am adding one to both variables since I don't wish to have the pagination start at 0.
+    for (var i = 1; i < pagesNeeded + 1; i++ ) {   // I am adding one to both variables since I don't wish to have the pagination start at 0.
         pagButton = $("<li><a href='#'>" + i + "</a></li>");
         pagination.append(pagButton);
     }
@@ -73,7 +84,35 @@ function paginationClicked() {
     console.log("Pagination button Clicked")
     $(this).parent().parent().children().children().removeClass("active");
     $(this).addClass("active");
+    pagSelected = $(this);
+    console.log("Number " + pagSelected + " selected");
+    paginate(pagSelected);
 }
+
+
+// Function that distributes the list items between all pages.
+function paginate(x) {
+
+    // Variable that constitutes the integer at which to start traversing the student array.
+    var pagMax = x.text() * studentsPP - 1;
+    console.log(pagMax);
+
+    // Variable that constitutes the integer at which to stop traversing the student array.
+    var pagMin = pagMax - 9;
+    console.log(pagMin);
+
+    if ( $(".pagination .active").text() === "" + x + "" ) {
+
+        for (var i = pagMin; pagMin < pagMax ; i++ ) {
+            $(".student-item").eq(i).fadeIn("fast", function() {
+                // Nothing needed here
+            });
+        }
+
+    }
+
+}
+
 
 
 // Hide all but the first 10 students when the page loads once the students are counted.
@@ -82,6 +121,7 @@ function paginationClicked() {
     hideStudents();
     calculatePagesNeeded();
     addPages();
+
 
 
     //Click function that reacts when an anchor is clicked.
