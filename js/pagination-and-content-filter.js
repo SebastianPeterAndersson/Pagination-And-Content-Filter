@@ -102,7 +102,7 @@ function paginate(x) {
     console.log(pagMin);
 
 
-    if ( x.text() === "2")
+    if ( x.text() === $(".pagination a.active").text()) { // The is solely for the purpose of testing
         for (var i = pagMin;pagMin < pagMax; i++ ) {
             $(".student-item").eq(i).fadeIn(600, function(){
                 // Animation supposedly complete...
@@ -112,6 +112,8 @@ function paginate(x) {
         }
 
     }
+
+}
 
 
 
