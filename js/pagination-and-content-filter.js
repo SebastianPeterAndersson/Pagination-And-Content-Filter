@@ -102,9 +102,10 @@ function paginate(x) {
     console.log(pagMin);
 
 
-    if ( x.text() === $(".pagination a.active").text()) {
-        for (var i = pagMin;pagMin < pagMax; i++ ) {
-            $(".student-item").eq(i).fadeIn(600, function(){
+    if ( x.text() === $(".pagination a.active").text() ) {
+        hideStudents();
+        for (var i = pagMin ; i < pagMax; i++ ) {
+            $(".student-item").eq(i).fadeIn("slow", function(){
                 // Animation supposedly complete...
             });
             console.log("CONSTRUCTING STUDENTS");
@@ -115,22 +116,42 @@ function paginate(x) {
 
 }
 
+// Function that automatically shows the first 10 students in the student list array.
+function paginateInitial() {
+    for (var i = 0; i < 10; i++) {
+        $(".student-item").eq(i).fadeIn("fast", function(){
+
+        });
+    }
+}
+
 
 
 
 
 // Hide all but the first 10 students when the page loads once the students are counted.
 // Calling this function first since the students are shown on the page initially.
+
     calculate$students();
+
     hideStudents();
+
     calculatePagesNeeded();
+
     addPages();
+
+    paginateInitial();
+
+
+
+
+
+
 
 
 
     //Click function that reacts when an anchor is clicked.
     $(".pagination a").click(paginationClicked);   // Calls function when a pagination anchor is clicked.
-
 
 
     // When a user clicks on “2” in the pagination, students 11 through 20 are shown. When a user clicks “3”, students 21 through 30 are shown. And so
