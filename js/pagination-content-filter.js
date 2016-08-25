@@ -46,6 +46,7 @@ function constructSearch() {
 function paginationClicked() {
     // Removes all the sibling anchor elements classes.
     $(this).parent().parent().children().children().removeClass("active");
+    $(this).addClass("active");
     // Adds the class active to the selected anchor.
     currentPagPage = $(this).text();
     console.log(currentPagPage);
@@ -78,6 +79,7 @@ function buttonClicked() {
 
     constructPagPages(userSearchArr.length);
     paginate(userSearchArr, 1);
+    console.log($(this))
 
 }
 
