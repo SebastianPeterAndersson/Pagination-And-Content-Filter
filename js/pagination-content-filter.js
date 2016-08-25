@@ -48,15 +48,21 @@ function paginationClicked() {
     $(this).parent().parent().children().children().removeClass("active");
     $(this).addClass("active");
     // Adds the class active to the selected anchor.
-    currentPagPage = $(this).text();
+    currentPagPage = $("a.active").text();
     console.log(currentPagPage);
-    paginate(allStudentsArr, $(this).text());
+    paginate(allStudentsArr, $("a.active").text());
 
 }
 
 // Function that is to be triggered when the search button is clicked.
 function buttonClicked() {
     removeStudents();
+
+
+    // Adds the class active to the selected anchor.
+    currentPagPage = $("a.active").text();
+    console.log(currentPagPage);
+    paginate(allStudentsArr, $("a.active").text());
     // Store what's typed in to the search input in a variable.
     var userSearch = $("input").val();
 
@@ -78,15 +84,15 @@ function buttonClicked() {
     });
 
     constructPagPages(userSearchArr.length);
-    paginate(userSearchArr, 1);
-    console.log($(this))
+    paginate(userSearchArr);
+    console.log($(".active").text());
 
 }
 
 
 // Function that cycles through the array provided as an argument and calculates
 // which part of the array to be displayed, and displays them accordingly.
-function paginate(list, selected) {
+function paginate(list) {
     // Removes all the items from the document. But because we are storing
     // the items in an array, nothing is really lost.
     removeStudents();
@@ -97,7 +103,7 @@ function paginate(list, selected) {
 
     // Variable that decides where the counting of the students should start
     // based on which pagination anchor element has the class of 'active'.
-    var headIndex = selected * maxStudents;
+    var headIndex = $(".active").text() * maxStudents;
 
     // Variable that goes together with the headIndex.
     var tailIndex = headIndex - 10;
@@ -117,7 +123,7 @@ function paginate(list, selected) {
 removeStudents();
 constructSearch();
 constructPagPages(allStudentsArr.length);
-paginate(allStudentsArr, 1);
+paginate(allStudentsArr);
 
 // Event click handler that targets the pagination buttons.
 $(".pagination a").click(paginationClicked);
