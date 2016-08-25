@@ -1,4 +1,6 @@
 
+var currentPagPage;
+
 // The amount of students per page.
 var maxStudents = 10;
 
@@ -35,15 +37,48 @@ function constructPagPages(listLength) {
 }
 
 
+// Function that constructs the search elements.
+function constructSearch() {
+    $(".page-header").append($("<div class='student-search'><input placeholder='Search for students...'><button>Search</button></div>"));
+}
+
+// Function that is to be triggered when the pagination anchor element is clicked.
 function paginationClicked() {
     // Removes all the sibling anchor elements classes.
     $(this).parent().parent().children().children().removeClass("active");
     // Adds the class active to the selected anchor.
-    $(this).addClass("active");
     currentPagPage = $(this).text();
     console.log(currentPagPage);
     paginate(allStudentsArr, $(this).text());
-    console.log($(this));
+
+}
+
+// Function that is to be triggered when the search button is clicked.
+function buttonClicked() {
+    removeStudents();
+    // Store what's typed in to the search input in a variable.
+    var userSearch = $("input").val();
+
+    // Creating an array for the successfully searched array objects.
+    var userSearchArr = [];
+
+    // Iterating through every single student, looking for a match, if a match
+    // is found, push it to the userSearchArr, then appending the objects
+    // within that array to the student list container.
+    $.each(allStudentsArr, function() {
+        var studentName = $(this).find("h3").text();
+        var filterThrough = studentName.indexOf(userSearch);
+        console.log(filterThrough);
+
+        if (filterThrough !== -1) {
+            userSearchArr.push($(this));
+        }
+
+    });
+
+    constructPagPages(userSearchArr.length);
+    paginate(userSearchArr, 1);
+
 }
 
 
@@ -74,12 +109,15 @@ function paginate(list, selected) {
     for ( i = 0; i < arrToShow.length; i++ ) {
         $(".student-list").append(arrToShow[i]);
     }
-
 }
 
+// Initial functions:
 removeStudents();
+constructSearch();
 constructPagPages(allStudentsArr.length);
 paginate(allStudentsArr, 1);
 
 // Event click handler that targets the pagination buttons.
 $(".pagination a").click(paginationClicked);
+
+$("button").click(buttonClicked);
