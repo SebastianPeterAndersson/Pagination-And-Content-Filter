@@ -1,6 +1,3 @@
-Treehouse Techdegree Project Number 2
+Project 2 Pagination-And-Content-Filter
+The second course in the Fullstack Javascript Techdegree.
 
-
-mail: me@sebastianpeterandersson.com
-
-Sebastian Andersson
